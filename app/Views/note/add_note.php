@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajouter une note</title>
 </head>
+
 <body>
     <h1>Ajouter une note</h1>
 
@@ -24,7 +26,7 @@
         </ul>
     <?php endif; ?>
 
-    <form method="POST" action="/note/store">
+    <form method="POST" action="<?= site_url('note/store') ?>">
         <?= csrf_field() ?>
 
         <div>
@@ -33,7 +35,7 @@
                 <option value="">-- Sélectionner un étudiant --</option>
                 <?php foreach ($etudiants as $etudiant): ?>
                     <option value="<?= $etudiant->id ?>" <?= old('etudiant_id') == $etudiant->id ? 'selected' : '' ?>>
-                        <?= $etudiant->prenom ?> <?= $etudiant->nom ?>
+                        <?= $etudiant->prenom ?>     <?= $etudiant->nom ?>
                     </option>
                 <?php endforeach; ?>
             </select>
@@ -53,15 +55,17 @@
 
         <div>
             <label for="note">Note (0-20) *</label>
-            <input type="number" id="note" name="note" required min="0" max="20" step="0.5" value="<?= old('note') ?>" placeholder="Ex: 15.5">
+            <input type="number" id="note" name="note" required min="0" max="20" step="0.5" value="<?= old('note') ?>"
+                placeholder="Ex: 15.5">
         </div>
 
         <button type="submit">Ajouter la note</button>
-        <a href="/dashboard">Retour</a>
+        <a href="<?= site_url('dashboard') ?>">Retour</a>
     </form>
 
     <footer>
         <p>&copy; 2026 - Gestion des Notes ITU</p>
     </footer>
 </body>
+
 </html>

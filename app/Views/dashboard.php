@@ -14,6 +14,7 @@
             <nav>
                 <a href="/dashboard" class="nav-link active">Dashboard</a>
                 <a href="/etudiant" class="nav-link">Étudiants</a>
+                <a href="/note/create" class="nav-link">Ajouter une note</a>
                 <a href="/auth/logout" class="nav-link logout">Déconnexion</a>
             </nav>
         </header>
