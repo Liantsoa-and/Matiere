@@ -38,11 +38,3 @@ CREATE TABLE users (
 INSERT INTO users (email, password) VALUES 
 ('admindefault@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi');
 
--- Insertion d'étudiants de test (5)
-INSERT INTO etudiant (num_etudiant, nom, prenom, annee) VALUES 
-('ETU001', 'RAKOTO', 'Jean', 'L2'),
-('ETU002', 'RASOLO', 'Marie', 'L2'),
-('ETU003', 'RABE', 'Faly', 'L2'),
-('ETU004', 'ANDRIANINA', 'Ioly', 'L2'),
-('ETU005', 'ANDRIAMASY', 'Mioty', 'L2');
-

@@ -17,6 +17,14 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     // Dashboard
     $routes->get('dashboard', 'DashboardController::index');
 
+    $routes->get('/dashboard', 'DashboardController::index');
+    
+    // Gestion des notes
+    $routes->get('/note/create', 'NoteController::create');
+    $routes->post('/note/store', 'NoteController::store');
+    $routes->post('/note/get-matieres-by-etudiant', 'NoteController::getMatieresByEtudiant');
+    $routes->get('/note/etudiant/(:num)', 'NoteController::getByEtudiant/$1');
+    
     // Liste des étudiants
     $routes->get('etudiant', 'EtudiantController::index');
     $routes->get('etudiant/(:num)', 'EtudiantController::show/$1');
