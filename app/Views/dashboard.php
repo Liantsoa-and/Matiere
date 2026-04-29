@@ -14,13 +14,20 @@
             <nav>
                 <a href="/dashboard" class="nav-link active">Dashboard</a>
                 <a href="/etudiant" class="nav-link">Étudiants</a>
+                <a href="/note/create" class="nav-link">Ajouter une note</a>
                 <a href="/auth/logout" class="nav-link logout">Déconnexion</a>
             </nav>
         </header>
 
         <div class="dashboard-cards">
             <div class="card">
-                <h3>👨‍🎓 Liste des étudiants</h3>
+                <h3>� Ajouter une note</h3>
+                <p>Saisir les notes pour les étudiants</p>
+                <a href="/note/create" class="btn-primary">Ajouter</a>
+            </div>
+
+            <div class="card">
+                <h3>�👨‍🎓 Liste des étudiants</h3>
                 <p>Consultez et gérez les étudiants</p>
                 <a href="/etudiant" class="btn-primary">Voir les étudiants</a>
             </div>
