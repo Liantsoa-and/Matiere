@@ -14,7 +14,7 @@ class AuthController extends BaseController
 
         // Valeurs par défaut comme demandé dans le TP
         $data = [
-            'default_email' => 'admin@example.com',
+            'default_email' => 'admindefault@example.com',
             'default_password' => 'password'
         ];
 
