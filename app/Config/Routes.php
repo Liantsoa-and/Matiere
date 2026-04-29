@@ -22,6 +22,8 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     // Gestion des notes
     $routes->get('/note/create', 'NoteController::create');
     $routes->post('/note/store', 'NoteController::store');
+    $routes->post('/note/update/(:num)', 'NoteController::update/$1');
+    $routes->post('/note/delete/(:num)', 'NoteController::delete/$1');
     $routes->post('/note/get-matieres-by-etudiant', 'NoteController::getMatieresByEtudiant');
     $routes->get('/note/etudiant/(:num)', 'NoteController::getByEtudiant/$1');
     

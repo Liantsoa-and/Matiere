@@ -19,6 +19,19 @@ class NoteController extends BaseController
     }
 
     /**
+     * Vérifie que l'utilisateur courant est administrateur.
+     */
+    protected function ensureAdmin()
+    {
+        if (session()->get('role') !== 'admin') {
+            session()->setFlashdata('error', 'Accès refusé : seuls les administrateurs peuvent modifier ou supprimer des notes.');
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Affiche le formulaire d'ajout de note
      */
     public function create()
@@ -62,6 +75,71 @@ class NoteController extends BaseController
             session()->setFlashdata('error', 'Erreur lors de l\'ajout de la note');
             return redirect()->back()->withInput();
         }
+    }
+
+    /**
+     * Modifie une note existante.
+     */
+    public function update($id)
+    {
+        if (!$this->ensureAdmin()) {
+            return redirect()->to('/dashboard');
+        }
+
+        $note = $this->noteModel->find($id);
+
+        if (!$note) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Note non trouvée');
+        }
+
+        $rules = [
+            'note' => 'required|numeric|greater_than_equal_to[0]|less_than_equal_to[20]'
+        ];
+
+        if (!$this->validate($rules)) {
+            return redirect()->back()
+                ->withInput()
+                ->with('errors', $this->validator->getErrors());
+        }
+
+        $data = [
+            'etudiant_id' => $note->etudiant_id,
+            'matiere_id' => $note->matiere_id,
+            'note' => $this->request->getPost('note'),
+            'date_saisie' => date('Y-m-d H:i:s')
+        ];
+
+        if ($this->noteModel->update($id, $data)) {
+            session()->setFlashdata('success', 'Note modifiée avec succès');
+        } else {
+            session()->setFlashdata('error', 'Erreur lors de la modification de la note');
+        }
+
+        return redirect()->to('/note/etudiant/' . $note->etudiant_id);
+    }
+
+    /**
+     * Supprime une note existante.
+     */
+    public function delete($id)
+    {
+        if (!$this->ensureAdmin()) {
+            return redirect()->to('/dashboard');
+        }
+
+        $note = $this->noteModel->find($id);
+
+        if (!$note) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Note non trouvée');
+        }
+
+        if ($this->noteModel->delete($id)) {
+            session()->setFlashdata('success', 'Note supprimée avec succès');
+        } else {
+            session()->setFlashdata('error', 'Erreur lors de la suppression de la note');
+        }
+
+        return redirect()->to('/note/etudiant/' . $note->etudiant_id);
     }
 
     /**

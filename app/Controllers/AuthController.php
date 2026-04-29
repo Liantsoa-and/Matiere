@@ -33,7 +33,8 @@ class AuthController extends BaseController
             session()->set([
                 'isLoggedIn' => true,
                 'userId' => $user->id,
-                'userEmail' => $user->email
+                'userEmail' => $user->email,
+                'role' => $user->role ?? 'visiteur'
             ]);
             return redirect()->to('/dashboard');
         }
