@@ -51,3 +51,4 @@ INSERT INTO users (email, password) VALUES
 - Vue `dashboard.php` (minimale)
 
 
+A la enlever de gitignore les logs sy ny tariny
