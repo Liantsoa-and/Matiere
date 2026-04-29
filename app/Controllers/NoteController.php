@@ -25,7 +25,7 @@ class NoteController extends BaseController
     {
         $data = [
             'etudiants' => $this->etudiantModel->findAll(),
-            'matieres' => $this->matiereModel->findAll(),
+            'matieres' => $this->matiereModel->getAllWithSemestre(),
         ];
 
         return view('note/add_note', $data);
