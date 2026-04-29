@@ -1,7 +1,6 @@
-Voici la **TODO list complète** pour implémenter le login dans CodeIgniter 4, conformément aux exigences du TP.
+# TODO Login - CodeIgniter 4
 
-
-## TODO Login - CodeIgniter 4
+## Login
 
 ### 1. Base de données [ok]
 
@@ -49,5 +48,48 @@ INSERT INTO users (email, password) VALUES
 
 - Fichier `DashboardController.php`
 - Vue `dashboard.php` (minimale)
+
+
+## Liste etudiants
+
+### 1. Base de données
+
+```sql
+CREATE TABLE IF NOT EXISTS etudiant(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    num_etudiant VARCHAR(255) NOT NULL,
+    nom VARCHAR(255) NOT NULL,
+    prenom VARCHAR(255) NOT NULL,
+    annee ENUM('L2')
+);
+
+-- Insertion d'étudiants de test (d'après le relevé PDF)
+INSERT INTO etudiant (num_etudiant, nom, prenom, annee) VALUES 
+('ETU001', 'RAKOTO', 'Jean', 'L2'),
+('ETU002', 'RASOLO', 'Marie', 'L2'),
+('ETU003', 'RABE', 'Faly', 'L2'),
+('ETU004', 'ANDRIANINA', 'Ioly', 'L2'),
+('ETU005', 'ANDRIAMASY', 'Mioty', 'L2');
+```
+
+### 2. Modèle (`app/Models/`)
+- Fichier `EtudiantModel.php`
+
+
+### 3. Contrôleur (`app/Controllers/`)
+- Fichier `EtudiantController.php`
+
+
+### 4. Routes (`app/Config/Routes.php`)
+
+
+### 5. Vues
+- Fichier `app/Views/etudiants/liste.php`
+
+### 6. Mettre à jour le Dashboard
+- `app/Views/dashboard.php`
+
+### 7. Améliorer le contrôleur Dashboard
+- `app/Controllers/DashboardController.php`
 
 
