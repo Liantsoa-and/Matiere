@@ -20,7 +20,13 @@
 
         <div class="dashboard-cards">
             <div class="card">
-                <h3>👨‍🎓 Liste des étudiants</h3>
+                <h3>� Ajouter une note</h3>
+                <p>Saisir une nouvelle note pour un étudiant</p>
+                <a href="/note/create" class="btn-primary">Ajouter une note</a>
+            </div>
+
+            <div class="card">
+                <h3>�👨‍🎓 Liste des étudiants</h3>
                 <p>Consultez et gérez les étudiants</p>
                 <a href="/etudiant" class="btn-primary">Voir les étudiants</a>
             </div>

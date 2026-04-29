@@ -13,72 +13,57 @@ class MatiereModel extends Model
     protected $allowedFields = [
         'code',
         'nom',
-        'semestre',
-        'coefficient',
-        'parcours',
-        'est_optionnelle',
-        'groupe'
+        'credit',
+        'coefficient'
     ];
 
     /**
-     * Récupère les matières par semestre
-     * @param string $semestre ('S3' ou 'S4')
+     * Récupère toutes les matières avec info semestre via programme_matiere
      * @return array
      */
-    public function getBySemestre($semestre)
+    public function getAllWithSemestre()
     {
-        return $this->where('semestre', $semestre)->findAll();
-    }
-
-    /**
-     * Récupère les matières obligatoires d'un semestre
-     * @param string $semestre
-     * @return array
-     */
-    public function getObligatoires($semestre)
-    {
-        return $this->where('semestre', $semestre)
-                    ->where('est_optionnelle', false)
+        return $this->select('m.id, m.code, m.nom, m.credit, s.id as semestre_id, s.nom as semestre')
+                    ->from('matiere m')
+                    ->join('programme_matiere pm', 'pm.matiere_id = m.id', 'left')
+                    ->join('semestre s', 's.id = pm.semestre_id', 'left')
+                    ->groupBy('m.id')
+                    ->orderBy('s.id, m.code')
                     ->findAll();
     }
 
     /**
-     * Récupère les matières optionnelles d'un semestre
-     * @param string $semestre
+     * Récupère matières par semestre
+     * @param int $semestre_id (3 ou 4)
      * @return array
      */
-    public function getOptionnelles($semestre)
+    public function getBySemestre($semestre_id)
     {
-        return $this->where('semestre', $semestre)
-                    ->where('est_optionnelle', true)
+        return $this->select('m.id, m.code, m.nom, m.credit, s.id as semestre_id, s.nom as semestre')
+                    ->from('matiere m')
+                    ->join('programme_matiere pm', 'pm.matiere_id = m.id')
+                    ->join('semestre s', 's.id = pm.semestre_id')
+                    ->where('s.id', $semestre_id)
+                    ->groupBy('m.id')
+                    ->orderBy('m.code')
                     ->findAll();
     }
 
     /**
-     * Récupère les matières par parcours et semestre
-     * @param string $parcours ('developpement', 'reseau', 'web')
-     * @param string $semestre ('S3' ou 'S4')
+     * Récupère matières d'une option et semestre
+     * @param int $option_id
+     * @param int $semestre_id
      * @return array
      */
-    public function getByParcoursAndSemestre($parcours, $semestre)
+    public function getByOptionAndSemestre($option_id, $semestre_id)
     {
-        return $this->where('semestre', $semestre)
-                    ->where(function($builder) use ($parcours) {
-                        $builder->where('parcours', 'tous')
-                                ->orWhere('parcours', $parcours);
-                    })
-                    ->findAll();
-    }
-
-    /**
-     * Récupère un groupe d'options (matières du même groupe optionnel)
-     * @param string $groupe
-     * @return array
-     */
-    public function getOptionGroup($groupe)
-    {
-        return $this->where('groupe', $groupe)
-                    ->where('est_optionnelle', true)
+        return $this->select('m.id, m.code, m.nom, m.credit, s.id as semestre_id, s.nom as semestre, pm.groupe_id')
+                    ->from('matiere m')
+                    ->join('programme_matiere pm', 'pm.matiere_id = m.id')
+                    ->join('semestre s', 's.id = pm.semestre_id')
+                    ->where('pm.option_id', $option_id)
+                    ->where('pm.semestre_id', $semestre_id)
+                    ->orderBy('m.code')
                     ->findAll();
     }
 
@@ -93,15 +78,35 @@ class MatiereModel extends Model
     }
 
     /**
-     * Récupère toutes les matières d'un étudiant (S3 + S4)
-     * @param string $parcours
+     * Récupère matières obligatoires (groupe_id = NULL)
+     * @param int $option_id
+     * @param int $semestre_id
      * @return array
      */
-    public function getMatieresByParcours($parcours)
+    public function getObligatoires($option_id, $semestre_id)
     {
-        $s3 = $this->getByParcoursAndSemestre($parcours, 'S3');
-        $s4 = $this->getByParcoursAndSemestre($parcours, 'S4');
-        
-        return array_merge($s3, $s4);
+        return $this->select('m.id, m.code, m.nom, m.credit')
+                    ->from('matiere m')
+                    ->join('programme_matiere pm', 'pm.matiere_id = m.id')
+                    ->where('pm.option_id', $option_id)
+                    ->where('pm.semestre_id', $semestre_id)
+                    ->where('pm.groupe_id IS NULL')
+                    ->orderBy('m.code')
+                    ->findAll();
+    }
+
+    /**
+     * Récupère matières optionnelles par groupe
+     * @param int $groupe_id
+     * @return array
+     */
+    public function getByGroupe($groupe_id)
+    {
+        return $this->select('m.id, m.code, m.nom, m.credit')
+                    ->from('matiere m')
+                    ->join('programme_matiere pm', 'pm.matiere_id = m.id')
+                    ->where('pm.groupe_id', $groupe_id)
+                    ->orderBy('m.code')
+                    ->findAll();
     }
 }
