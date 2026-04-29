@@ -75,13 +75,10 @@ INSERT INTO etudiant (num_etudiant, nom, prenom, annee) VALUES
 ### 2. Modèle (`app/Models/`)
 - Fichier `EtudiantModel.php`
 
-
 ### 3. Contrôleur (`app/Controllers/`)
 - Fichier `EtudiantController.php`
 
-
 ### 4. Routes (`app/Config/Routes.php`)
-
 
 ### 5. Vues
 - Fichier `app/Views/etudiants/liste.php`
