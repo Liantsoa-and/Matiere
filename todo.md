@@ -75,13 +75,10 @@ INSERT INTO etudiant (num_etudiant, nom, prenom, annee) VALUES
 ### 2. Modèle (`app/Models/`)
 - Fichier `EtudiantModel.php`
 
-
 ### 3. Contrôleur (`app/Controllers/`)
 - Fichier `EtudiantController.php`
 
-
 ### 4. Routes (`app/Config/Routes.php`)
-
 
 ### 5. Vues
 - Fichier `app/Views/etudiants/liste.php`
@@ -92,4 +89,62 @@ INSERT INTO etudiant (num_etudiant, nom, prenom, annee) VALUES
 ### 7. Améliorer le contrôleur Dashboard
 - `app/Controllers/DashboardController.php`
 
+## Ajouter note
 
+### 1. Base de données [ok]
+
+```sql
+CREATE TABLE IF NOT EXISTS matiere(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    code VARCHAR(255) NOT NULL,
+    nom VARCHAR(255) NOT NULL,
+    semestre ENUM('S3', 'S4'),
+    coefficient INT NOT NULL,
+    parcours ENUM('developpement', 'reseau', 'web', 'tous'),
+    est_optionnelle BOOLEAN NOT NULL,
+    groupe VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS note(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    etudiant_id INT,
+    matiere_id INT,
+    note FLOAT,
+    date_saisie DATE
+);
+```
+
+### 2. Modèles (`app/Models/`) [ok]
+- Fichier `EtudiantModel.php` [ok]
+- Fichier `MatiereModel.php` [ok]
+- Fichier `NoteModel.php` [ok]
+
+### 3. Contrôleur (`app/Controllers/`) [ok]
+- Fichier `NoteController.php` [ok]
+  - Méthode `create()` (affiche le formulaire)
+  - Méthode `store()` (traite l'ajout)
+  - Méthode `getMatieresByEtudiant()` (filtre AJAX)
+  - Méthode `getByEtudiant()` (affiche les notes)
+
+### 4. Routes (`app/Config/Routes.php`) [ok]
+- GET `/note/create` → formulaire
+- POST `/note/store` → validation et sauvegarde
+- POST `/note/get-matieres-by-etudiant` → filtre AJAX
+- GET `/note/etudiant/(:num)` → affiche notes étudiant
+
+### 5. Vues [ok]
+- Fichier `app/Views/note/add_note.php` [ok]
+  - Formulaire d'ajout
+  - Select étudiant
+  - Select matière (dynamique)
+  - Input note (0-20)
+  - Messages de succès/erreur
+
+### 6. Données de test [ok]
+- Insertion d'étudiants [ok]
+- Insertion de matières S3 et S4 [ok]
+- Parcours associés (developpement, reseau, web) [ok]
+
+### 7. Mettre à jour le Dashboard [ok]
+- `app/Views/dashboard.php` [ok]
+- Ajouter lien vers "Ajouter une note" [ok]

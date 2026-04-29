@@ -17,8 +17,6 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     // Dashboard
     $routes->get('dashboard', 'DashboardController::index');
 
-    $routes->get('/dashboard', 'DashboardController::index');
-    
     // Gestion des notes
     $routes->get('/note/create', 'NoteController::create');
     $routes->post('/note/store', 'NoteController::store');

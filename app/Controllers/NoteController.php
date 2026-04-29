@@ -38,7 +38,7 @@ class NoteController extends BaseController
     {
         $data = [
             'etudiants' => $this->etudiantModel->findAll(),
-            'matieres' => $this->matiereModel->findAll(),
+            'matieres' => $this->matiereModel->getAllWithSemestre(),
         ];
 
         return view('note/add_note', $data);
@@ -58,8 +58,8 @@ class NoteController extends BaseController
 
         if (!$this->validate($rules)) {
             return redirect()->back()
-                            ->withInput()
-                            ->with('errors', $this->validator->getErrors());
+                ->withInput()
+                ->with('errors', $this->validator->getErrors());
         }
 
         // Récupère les données du formulaire
@@ -70,7 +70,7 @@ class NoteController extends BaseController
         // Ajoute la note
         if ($this->noteModel->addNote($etudiant_id, $matiere_id, $note)) {
             session()->setFlashdata('success', 'Note ajoutée avec succès');
-            return redirect()->to('/note/create');
+            return redirect()->to('note/create');
         } else {
             session()->setFlashdata('error', 'Erreur lors de l\'ajout de la note');
             return redirect()->back()->withInput();
@@ -167,7 +167,7 @@ class NoteController extends BaseController
     public function getMatieresByEtudiant()
     {
         $etudiant_id = $this->request->getPost('etudiant_id');
-        
+
         if (!$etudiant_id) {
             return $this->response->setJSON([
                 'success' => false,
