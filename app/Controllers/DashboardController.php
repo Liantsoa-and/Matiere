@@ -10,13 +10,13 @@ class DashboardController extends BaseController
         // Statistiques rapides
         $etudiantModel = new EtudiantModel();
         // $noteModel = new \App\Models\NoteModel();
-        
+
         $data = [
             'userEmail' => session()->get('userEmail'),
-            'totalEtudiants' => $etudiantModel->countAll()
+            'total_students' => $etudiantModel->countAll()
             // 'totalNotes' => $noteModel->countAll()
         ];
-        
+
         return view('dashboard', $data);
     }
 }
