@@ -12,7 +12,12 @@ $routes->get('/', 'AuthController::login');
 $routes->post('auth/authenticate', 'AuthController::authenticate');
 $routes->get('auth/logout', 'AuthController::logout');
 
-$routes->group('', ['filter' => 'auth'], function ($routes) {
-    $routes->get('dashboard', 'DashboardController::index');
-    // autres routes...
+// Routes protégées par authentification
+$routes->group('', ['filter' => 'auth'], function($routes) {
+    // Dashboard
+    $routes->get('/dashboard', 'DashboardController::index');
+    
+    // Liste des étudiants
+    $routes->get('/etudiant', 'EtudiantController::index');
+    $routes->get('/etudiant/(:num)', 'EtudiantController::show/$1');
 });

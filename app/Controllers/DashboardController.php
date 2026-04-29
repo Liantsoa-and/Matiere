@@ -1,14 +1,22 @@
 <?php
 namespace App\Controllers;
 
+use \App\Models\EtudiantModel;
+
 class DashboardController extends BaseController
 {
     public function index()
     {
-        // Le filtre auth garantit qu'on est connecté
+        // Statistiques rapides
+        $etudiantModel = new EtudiantModel();
+        // $noteModel = new \App\Models\NoteModel();
+        
         $data = [
-            'userEmail' => session()->get('userEmail')
+            'userEmail' => session()->get('userEmail'),
+            'totalEtudiants' => $etudiantModel->countAll()
+            // 'totalNotes' => $noteModel->countAll()
         ];
+        
         return view('dashboard', $data);
     }
 }
