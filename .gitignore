@@ -1,0 +1,67 @@
+# CodeIgniter 4 Application Files
+#
+# Reference: https://codeigniter.com/user_guide/general/managing_apps.html#keeping-certain-files-private
+
+# Environment Configuration
+.env
+.env.backup
+.env.*.backup
+
+# IDE & Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-*
+*.project
+*.settings/
+*.c9/
+*.iml
+.netbeans/
+
+# OS Files
+.DS_Store
+Thumbs.db
+.AppleDouble
+.LSOverride
+
+# Build Directory
+build/
+
+# Vendor (Dependencies)
+vendor/
+node_modules/
+
+# Cache & Logs (Writable Directory)
+writable/cache/*
+!writable/cache/.gitkeep
+writable/debugbar/*
+!writable/debugbar/.gitkeep
+writable/logs/*
+!writable/logs/.gitkeep
+writable/session/*
+!writable/session/.gitkeep
+
+# User Uploads
+writable/uploads/*
+!writable/uploads/.gitkeep
+
+# Test Coverage Reports
+build/logs/
+*.coverage
+coverage.xml
+
+# Composer Lock (depending on project policy)
+# composer.lock
+
+# Database fixtures/dumps (except migrations)
+# app/Database/backups/*
+
+# PHPUnit Report Files
+report.html
+
+# Local overrides
+.htaccess.local
+
+Matiere.pdf
